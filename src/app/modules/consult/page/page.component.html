@@ -1,0 +1,30 @@
+<form>
+  <div>
+    <input type="search" [formControl]="search" placeholder="Search in the DB ..." size="30">
+    <button type="button" (click)="onSubmit()">Search</button>
+    <fieldset>
+      <legend>What are you looking for?</legend>
+      <label><input type="radio" [formControl]="filter" name="filter" value="biodatabase"> Database</label>
+      <label><input type="radio" [formControl]="filter" name="filter" value="bioentry"> Sequence</label>
+      <label><input type="radio" [formControl]="filter" name="filter" value="taxon"> Taxon</label>
+    </fieldset>
+  </div>
+
+  <table #resultTable>
+    <thead>
+      <label for="size">Page size</label>
+      <select name="size">
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </thead>
+    <tbody>
+      <tr *ngIf="resultList.length==0">
+        <h2>There is nothing to show.</h2>
+      </tr>
+      <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable" (click)="selectItem(rowIndex)">
+      </tr>
+    </tbody>
+  </table>
+</form>

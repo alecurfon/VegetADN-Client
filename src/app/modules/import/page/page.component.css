@@ -1,0 +1,28 @@
+#files {
+	float: left;
+	width: 60%;
+}
+#biodbTable {
+	float: right;
+	max-width: 40%;
+	/* max-height: 100%; */
+}
+
+#dropbox {
+	min-width: 80%;
+	text-align: center;
+	margin: 2% 5%;
+	padding: 3%;
+	background-color: #c8dadf;
+	outline: 2px dashed #92b0b3;
+	outline-offset: -10px;
+}
+
+img.vert-move {
+    animation: mover 1s infinite  alternate;
+}
+
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}

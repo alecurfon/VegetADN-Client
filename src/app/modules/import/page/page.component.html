@@ -1,0 +1,61 @@
+<form (ngSubmit)="onSubmit()">
+
+  <section id="files" class="form">
+    <h1>Form to insert into the database</h1>
+
+    <div id="dropbox" class="dropbox" (mydrop)="dropHandler($event)">
+      <img src="assets/images/icons/export.png" width="50" class="vert-move" height="50"><br>
+      <label for="dropbox">Choose a file or drag it here.</label>
+      <p>
+        <label for="fileInput"><span>Files: </span></label>
+        <input id="fileInput" type="file" class="button" (change)="updateFileList($event)" multiple>
+      </p>
+    </div>
+
+    <table id="fileTable">
+      <thead>
+        <tr>
+          <th width="80%">File Name</th>
+          <th width="20%">Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of fileList; index as rowIndex;">
+          <td width="80%">{{ f.name }}</td>
+          <td width="20%">
+            <button type="button" (click)="removeFile(rowIndex)">X</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <button type="submit" class="button" [disabled]="fileList.length<1">Upload list</button>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+
+  <table id="biodbTable">
+    <thead>
+      <tr>
+        <th width="10%">Selected</th>
+        <th width="35%">Name</th>
+        <th width="35%">Authority</th>
+        <th width="20%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of biodbList; index as rowIndex;" class="clickable" (click)="updateRadio(rowIndex)">
+        <td width="10%">
+          <input type="radio" name="biodb" [checked]="biodb.value==rowIndex">
+        </td>
+        <td width="35%">{{ i.name }}</td>
+        <td width="35%">{{ i.authority }}</td>
+        <td width="20%">
+          <div class="tooltip"><strong>...</strong>
+            <span class="tooltiptext">{{ i.description }}</span></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

@@ -1,0 +1,31 @@
+form {
+  margin-right: 10%;
+}
+
+.drop-left, #biodbTable {
+  position: fixed;
+  top: 10vh;
+  height: 80vh;
+}
+
+.drop-left {
+  right: 0;
+  width: 10vw;
+  background-color: grey;
+  text-align: center;
+  display: grid;
+}
+
+#biodbTable {
+  border: 1px solid;
+  right: 10vw;
+  width: 0;
+  max-width: 90vw;
+  transition: width 1s;
+  background-color: white;
+  visibility: hidden;
+}
+
+.vertical-text {
+	transform: rotate(90deg);
+}
