@@ -1,12 +1,12 @@
-<form>
+<form [formGroup]='form'>
   <div>
-    <input type="search" [formControl]="search" placeholder="Search in the DB ..." size="30">
+    <input type="search" formControlName="search" placeholder="Search in the DB ..." size="30">
     <button type="button" (click)="onSubmit()">Search</button>
     <fieldset>
       <legend>What are you looking for?</legend>
-      <label><input type="radio" [formControl]="filter" name="filter" value="biodatabase"> Database</label>
-      <label><input type="radio" [formControl]="filter" name="filter" value="bioentry"> Sequence</label>
-      <label><input type="radio" [formControl]="filter" name="filter" value="taxon"> Taxon</label>
+      <label><input type="radio" formControlName="type" value="biodatabase"> Database</label>
+      <label><input type="radio" formControlName="type" value="bioentry"> Sequence</label>
+      <label><input type="radio" formControlName="type" value="taxon"> Taxon</label>
     </fieldset>
   </div>
 
@@ -23,7 +23,8 @@
       <tr *ngIf="resultList.length==0">
         <h2>There is nothing to show.</h2>
       </tr>
-      <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable" (click)="selectItem(rowIndex)">
+      <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable">
+        <p>{{resultList[rowIndex]}}</p>
       </tr>
     </tbody>
   </table>

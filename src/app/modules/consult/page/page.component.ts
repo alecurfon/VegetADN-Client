@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { RestfulService } from '@shared/services/restful.service.ts';
 
@@ -20,15 +20,18 @@ export class ConsultPageComponent {
   constructor(private restfulApi: RestfulService) {}
 
   resultList: Array<any> = [];
-  search = new FormControl('');
-  filter = new FormControl('biodatabase');
+  form = new FormGroup({
+    type : new FormControl('biodatabase'),
+    search : new FormControl('')
+  });
 
   onSubmit() {
-    this.restfulApi.search(this.filter.value, this.search.value).subscribe(response => {
-       this.resultList = response;
+    this.restfulApi.search(this.form.value).subscribe(response => {
+      this.resultList = response;
+      console.log(response);
     }, error => {
       console.log(error);
-       alert(error.error['message'] + '\nThe operation could not be completed.');
+      alert(error.error['message'] + '\nThe operation could not be completed.');
     });
   }
 }

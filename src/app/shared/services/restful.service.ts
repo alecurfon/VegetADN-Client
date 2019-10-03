@@ -12,6 +12,15 @@ export class RestfulService {
 
   constructor(private http: HttpClient) { }
 
+
+  // HttpOptions {
+  //   headers?: HttpHeaders | { [header: string]: string | string[]; };
+  //   observe?: "body";
+  //   params?: HttpParams | { [param: string]: string | string[]; };
+  //   reportProgress?: boolean;
+  //   responseType: "arraybuffer";
+  //   withCredentials?: boolean;
+  // }
   private buildHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
@@ -31,8 +40,8 @@ export class RestfulService {
 
   // Search
 
-  search(type, concept): Observable<any> {
-      return this.http.get(this.baseUrl + '/search/' + type, {'search' : concept});
+  search(formData): Observable<any> {
+    return this.http.get(this.baseUrl + '/search', { params: formData });
   }
 
   // Bioentry
