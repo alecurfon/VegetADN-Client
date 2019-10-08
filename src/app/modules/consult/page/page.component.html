@@ -1,7 +1,7 @@
 <form [formGroup]='form'>
   <div>
     <input type="search" formControlName="search" placeholder="Search in the DB ..." size="30">
-    <button type="button" (click)="onSubmit()">Search</button>
+    <button type="button" (click)="search()">Search</button>
     <fieldset>
       <legend>What are you looking for?</legend>
       <label><input type="radio" formControlName="type" value="biodatabase"> Database</label>
@@ -12,20 +12,39 @@
 
   <table #resultTable>
     <thead>
-      <label for="size">Page size</label>
-      <select name="size">
-        <option value="10">10</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
+      <tr>
+        <label for="page_size">Page size</label>
+        <select formControlName="page_size">
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <p *ngIf="total>0">Items: {{total}}</p>
+      </tr>
+      <tr>
+        <button type="button" [disabled]="form.value['page']==1" (click)="changePage('first')"><< First</button>
+        <button type="button" [disabled]="form.value['page']==1" (click)="changePage('prev')">< Prev</button>
+        <p>Page {{form.value['page']}} of {{pages}}</p>
+        <button type="button" [disabled]="form.value['page']==pages" (click)="changePage('next')">Next ></button>
+        <button type="button" [disabled]="form.value['page']==pages" (click)="changePage('last')">Last >></button>
+      </tr>
     </thead>
     <tbody>
       <tr *ngIf="resultList.length==0">
         <h2>There is nothing to show.</h2>
       </tr>
       <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable">
-        <p>{{resultList[rowIndex]}}</p>
+        <p>{{serializeItem(resultList[rowIndex])}}</p>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <button type="button" [disabled]="form.value['page']==1" (click)="changePage('first')"><< First</button>
+        <button type="button" [disabled]="form.value['page']==1" (click)="changePage('prev')">< Prev</button>
+        <p>Page {{form.value['page']}} of {{pages}}</p>
+        <button type="button" [disabled]="form.value['page']==pages" (click)="changePage('next')">Next ></button>
+        <button type="button" [disabled]="form.value['page']==pages" (click)="changePage('last')">Last >></button>
+      </tr>
+    </tfoot>
   </table>
 </form>
