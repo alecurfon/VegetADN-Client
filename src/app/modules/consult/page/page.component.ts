@@ -22,6 +22,7 @@ export class ConsultPageComponent {
   resultList: Array<any> = [];
   pages = 1;
   total = 0;
+  type = '';
   form = new FormGroup({
     type : new FormControl('biodatabase'),
     search : new FormControl(''),
@@ -67,6 +68,7 @@ export class ConsultPageComponent {
   }
 
   onSubmit() {
+    this.type = this.form.value['type'];
     this.restfulApi.search(this.form.value).subscribe(response => {
       this.resultList = response['result'];
       this.pages = response['pages'];

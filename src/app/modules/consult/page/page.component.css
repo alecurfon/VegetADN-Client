@@ -1,10 +1,7 @@
-#search {
-  width: 90%;
-}
-#submit {
-  width: 8%;
-}
 label {
   display: inline;
   margin: 1%;
+}
+thead tr > *, tfoot tr > * {
+  display: inline;
 }
