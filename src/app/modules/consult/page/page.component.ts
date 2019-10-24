@@ -3,13 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { RestfulService } from '@shared/services/restful.service.ts';
 
-// import { Biodatabase } from '@shared/db_model/biodatabase.model.ts';
-// import { Bioentry } from '@shared/db_model/bioentry.model.ts';
-// import { Biosequence } from '@shared/db_model/biosequence.model.ts';
-// import { Taxon } from '@shared/db_model/taxon.model.ts';
-// import { TaxonName } from '@shared/db_model/taxon_name.model.ts';
-
-
 @Component({
   selector: 'consult-page',
   templateUrl: './page.component.html',
@@ -64,10 +57,12 @@ export class ConsultPageComponent {
   search() {
     this.form.controls['page'].setValue(1);
     this.pages = 1;
+    this.resultList = [];
     this.onSubmit();
   }
 
   onSubmit() {
+    console.log(this.form.value)
     this.type = this.form.value['type'];
     this.restfulApi.search(this.form.value).subscribe(response => {
       this.resultList = response['result'];
