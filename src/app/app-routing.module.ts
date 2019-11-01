@@ -13,7 +13,11 @@ const routes: Routes = [
   { path: '', component: LayoutPageComponent, children: [
     { path: 'home', component: HomePageComponent},
     { path: 'import', component: ImportPageComponent},
-    { path: 'consult', component: ConsultPageComponent},
+    { path: 'consult', component: ConsultPageComponent, children: [
+      { path: 'biodatabase/:id', component: ImportPageComponent},
+      { path: 'bioentry/:id', component: ImportPageComponent},
+      { path: 'taxon/:id', component: ImportPageComponent},
+    ]},
     { path: 'biodb', component: BiodbPageComponent},
     { path: 'login', component: LoginPageComponent},
   ]},

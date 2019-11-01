@@ -34,13 +34,14 @@
         <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('next')">Next ></button>
         <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('last')">Last >></button>
       </tr>
+      <progress [hidden]="!loading"></progress>
     </thead>
     <tbody>
       <tr *ngIf="resultList.length<=0">
         <h2>There is nothing to show.</h2>
       </tr>
       <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable">
-        <consult-section [type]="type" [data]="i">
+        <consult-section [type]="result_type" [data]="i">
         </consult-section>
       </tr>
     </tbody>

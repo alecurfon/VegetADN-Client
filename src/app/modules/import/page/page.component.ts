@@ -18,6 +18,7 @@ export class ImportPageComponent implements OnInit {
   fileList: Array<File> = [];
   biodb = new FormControl(0);
   biodbList: Array<Biodatabase> = [];
+  uploading = false;
 
   ngOnInit() {
     this.restfulApi.getBiodb().subscribe(response => {
@@ -48,11 +49,14 @@ export class ImportPageComponent implements OnInit {
   }
 
   onSubmit() {
+    this.uploading=true;
     let biodb_name = this.biodbList[this.biodb.value].name;
     this.restfulApi.importFiles(biodb_name, this.fileList).subscribe(response => {
+      this.uploading=false;
       alert(response);
       this.fileList = [];
     }, error => {
+      this.uploading=false;
       alert(error.error + '\nThe operation could not be completed.');
     });
   }

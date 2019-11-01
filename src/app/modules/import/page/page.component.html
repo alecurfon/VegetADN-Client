@@ -29,7 +29,8 @@
       </tbody>
       <tfoot>
         <tr>
-          <button type="submit" class="button" [disabled]="fileList.length<1">Upload list</button>
+          <progress [hidden]="!uploading"></progress>
+          <button type="submit" class="button" [disabled]="fileList.length<1 || uploading">Upload list</button>
         </tr>
       </tfoot>
     </table>

@@ -9,17 +9,17 @@
     </a>
 </div>
 
-<tr *ngIf="type=='bioentry'">
+<div *ngIf="type=='bioentry'">
     <a [routerLink]="['/bioentry/'+data.bioentry_id]">
       <div>
         <h3>Accession: {{data.accession}}</h3>
         <p>Description: {{data.description}}</p>
       </div>
     </a>
-</tr>
+</div>
 
 <div *ngIf="type=='taxon'">
-    <a [routerLink]="['/taxon'+data.taxon_id]">
+    <a [routerLink]="['/taxon/'+data.taxon_id]">
       <div>
         <h3>Name: {{data.name}}</h3>
         <p>Class: {{data.name_class}}</p>

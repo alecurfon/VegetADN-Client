@@ -15,7 +15,8 @@ export class ConsultPageComponent {
   resultList: Array<any> = [];
   pages = 1;
   total = 0;
-  type = '';
+  result_type = '';
+  loading = false;
   form = new FormGroup({
     type : new FormControl('biodatabase'),
     search : new FormControl(''),
@@ -63,13 +64,16 @@ export class ConsultPageComponent {
 
   onSubmit() {
     console.log(this.form.value)
-    this.type = this.form.value['type'];
+    this.result_type = this.form.value['type'];
+    this.loading = true;
     this.restfulApi.search(this.form.value).subscribe(response => {
+      this.loading = false;
       this.resultList = response['result'];
       this.pages = response['pages'];
       this.total = response['total'];
       console.log(response);
     }, error => {
+      this.loading = false;
       console.log(error);
       alert(error.error['message'] + '\nThe operation could not be completed.');
     });
