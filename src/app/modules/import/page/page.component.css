@@ -1,18 +1,8 @@
-#files {
-	float: left;
-	width: 60%;
-}
-#biodbTable {
-	float: right;
-	max-width: 40%;
-	/* max-height: 100%; */
-}
-
 #dropbox {
-	min-width: 80%;
+	/* min-width: 80%; */
 	text-align: center;
-	margin: 2% 5%;
-	padding: 3%;
+	/* margin: 2% 5%; */
+	padding: 5%;
 	background-color: #c8dadf;
 	outline: 2px dashed #92b0b3;
 	outline-offset: -10px;

@@ -1,58 +1,32 @@
-<form [formGroup]='form'>
-  <div>
-    <input type="search" formControlName="search" placeholder="Search in the DB ..." size="30">
-    <button type="button" (click)="search()">Search</button>
-    <fieldset>
-      <legend>What are you looking for?</legend>
-      <label><input type="radio" formControlName="type" value="biodatabase"> Database</label>
-      <label><input type="radio" formControlName="type" value="bioentry"> Sequence</label>
-      <label><input type="radio" formControlName="type" value="taxon"> Taxon</label>
-    </fieldset>
-  </div>
+<p>consulting {{type}}:{{id}} works!</p>
 
-  <table #resultTable>
-    <thead>
-      <tr>
-        <label for="page_size">Page size
-          <select formControlName="page_size">
-            <option value=10>10</option>
-            <option value=25>25</option>
-            <option value=50>50</option>
-            <option value=100>100</option>-
-          </select>
-        </label>
-      </tr>
-      <tr *ngIf="total>0">
-        <p>
-          Items: {{total}}
-        </p>
-      </tr>
-      <tr>
-        <button type="button" [disabled]="form.value['page']<=1" (click)="changePage('first')"><< First</button>
-        <button type="button" [disabled]="form.value['page']<=1" (click)="changePage('prev')">< Prev</button>
-        <p>Page {{form.value['page']}} of {{pages}}</p>
-        <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('next')">Next ></button>
-        <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('last')">Last >></button>
-      </tr>
-      <progress [hidden]="!loading"></progress>
-    </thead>
-    <tbody>
-      <tr *ngIf="resultList.length<=0">
-        <h2>There is nothing to show.</h2>
-      </tr>
-      <tr *ngFor="let i of resultList; index as rowIndex;" class="clickable">
-        <consult-section [type]="result_type" [data]="i">
-        </consult-section>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <button type="button" [disabled]="form.value['page']<=1" (click)="changePage('first')"><< First</button>
-        <button type="button" [disabled]="form.value['page']<=1" (click)="changePage('prev')">< Prev</button>
-        <p>Page {{form.value['page']}} of {{pages}}</p>
-        <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('next')">Next ></button>
-        <button type="button" [disabled]="form.value['page']>=pages" (click)="changePage('last')">Last >></button>
-      </tr>
-    </tfoot>
-  </table>
-</form>
+
+<div *ngIf="type=='bioentry'">
+  <div class="information">
+    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
+  </div>
+  <div class="related">
+
+  </div>
+  <h2>Sequences related with this bioentry.</h2>
+</div>
+
+<div *ngIf="type=='biodatabase'">
+  <div class="information">
+    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
+  </div>
+  <div class="related">
+
+  </div>
+  <h2>Sequences related with this biodatabase.</h2>
+</div>
+
+<div *ngIf="type=='taxon'">
+  <div class="information">
+    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
+  </div>
+  <div class="related">
+
+  </div>
+  <h2>Sequences related with this taxon.</h2>
+</div>

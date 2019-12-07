@@ -1,7 +1,11 @@
-<a [routerLink]="['/'+value]" class='button'>
-  <div>
-    <h2>{{title}}</h2>
-    <p>{{description}}</p>
-    <img class="gray-light" src="assets/images/icons/{{value}}.png" width='100'>
-  </div>
-</a>
+<div class="card">
+  <a [routerLink]="['/'+value]" class='btn btn-success'>
+    <div class="card-header bg-light">
+      <img class="card-img-top" src="assets/images/icons/{{value}}.png" style="width: 18rem;">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{title}}</h5>
+      <p class="card-text">{{description}}</p>
+    </div>
+  </a>
+</div>

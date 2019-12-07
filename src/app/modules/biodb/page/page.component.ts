@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 
+import { FormComponent } from '../form/form.component';
 import { RestfulService } from '@shared/services/restful.service.ts';
 import { Biodatabase } from '@shared/db_model/biodatabase.model.ts';
 
@@ -15,81 +14,74 @@ export class BiodbPageComponent implements OnInit {
 
   constructor(private restfulApi: RestfulService) {}
 
+  @ViewChild(FormComponent, {static: false}) formDialog;
   biodbList: Array<Biodatabase> = [];
   selectedIndex: number = -1;
 
-  form = new FormGroup({
-    name: new FormControl(''),
-    authority: new FormControl(''),
-    description: new FormControl('')
-  });
-
   ngOnInit() {
-    this.resfreshBiodbList();
+    this.refreshBiodbList();
+  }
+
+  refreshBiodbList() {
+    this.restfulApi.getBiodb('yes').subscribe(response => {
+       this.biodbList = response;
+    }, error => {
+       alert(error.error['message'] + '\nThe list of collections could not be loaded.');
+    });
   }
 
   selectBiodb(index) {
     this.selectedIndex = index;
-    this.form.setValue({
-      name: this.biodbList[index].name,
-      authority: this.biodbList[index].authority,
-      description: this.biodbList[index].description
-    })
-    this.showBiodbList();
-  }
-
-  showBiodbList() {
-    var x = document.getElementById("biodbTable")
-    if(x.style.visibility == 'visible') {
-      x.style.width = '0';
-      x.style.visibility = 'hidden';
+    if(index<0) {
+      this.formDialog.form.setValue({'name':'', 'authority':'', 'description':''});
     } else {
-      this.resfreshBiodbList();
-      x.style.visibility = 'visible';
-      x.style.width = '90vw';
+      let x = this.biodbList[index]
+      this.formDialog.form.setValue({'name': x.name, 'authority': x.authority, 'description': x.description});
     }
   }
 
-  resfreshBiodbList() {
-    this.restfulApi.getBiodb().subscribe(response => {
-       this.biodbList = response;
+  formSubmitted(values) {
+    if(this.selectedIndex<0) {
+      console.log(values);
+      this.createBiodb(values);
+    } else {
+      console.log(values);
+      this.updateBiodb(values);
+    }
+  }
+
+  createBiodb(values) {
+    this.restfulApi.createBiodb({'name':values.name, 'authority':values.authority, 'description': values.description})
+    .subscribe(response => {
+      this.refreshBiodbList();
+      alert(response['message']);
     }, error => {
-       alert(error.error['message'] + '\nThe operation could not be completed.');
+      alert(error.error['message'] + '\nThe collection could not be created.');
     });
   }
 
-  createBiodb() {
-    this.restfulApi.createBiodb(this.form.value).subscribe(response => {
-       alert(response['message']);
-       this.form.reset();
+  updateBiodb(values) {
+    this.restfulApi.updateBiodb(this.biodbList[this.selectedIndex].name,
+      {'name':values.name, 'authority':values.authority, 'description': values.description})
+    .subscribe(response => {
+      this.refreshBiodbList();
+      alert(response['message']);
     }, error => {
-       alert(error.error['message'] + '\nThe operation could not be completed.');
+      alert(error.error['message'] + '\nThe collection could not be updated.');
     });
-    this.selectedIndex = -1;
-  }
-
-  updateBiodb() {
-    this.restfulApi.updateBiodb(this.biodbList[this.selectedIndex].biodatabase_id,
-      this.form.value).subscribe(response => {
-       alert(response['message']);
-       this.form.reset();
-    }, error => {
-       alert(error.error['message'] + '\nThe operation could not be completed.');
-    });
-    this.selectedIndex = -1;
   }
 
   removeBiodb(index) {
-    if(!confirm("You are trying to remove the "
-      + this.biodbList[index].name + " collection.\nAre you sure?")) {
-      console.log('Canceled.');
+    if(!confirm("You are trying to remove the '"
+      + this.biodbList[index].name + "' collection.\nAre you sure?")) {
       return;
     }
-    this.restfulApi.deleteBiodb(this.biodbList[index].biodatabase_id).subscribe(response => {
-       alert(response['message']);
+    this.restfulApi.deleteBiodb(this.biodbList[index].name)
+    .subscribe(response => {
+      this.refreshBiodbList();
+      alert(response['message']);
     }, error => {
-       alert(error.error['message'] + '\nThe operation could not be completed.');
+      alert(error.error['message'] + '\nThe collection could not be removed.');
     });
-    this.selectedIndex = -1;
   }
 }

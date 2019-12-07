@@ -16,7 +16,7 @@ export class ImportPageComponent implements OnInit {
   constructor(private restfulApi: RestfulService) {}
 
   fileList: Array<File> = [];
-  biodb = new FormControl(0);
+  biodb = new FormControl(-1);
   biodbList: Array<Biodatabase> = [];
   uploading = false;
 
@@ -51,7 +51,7 @@ export class ImportPageComponent implements OnInit {
   onSubmit() {
     this.uploading=true;
     let biodb_name = this.biodbList[this.biodb.value].name;
-    this.restfulApi.importFiles(biodb_name, this.fileList).subscribe(response => {
+    this.restfulApi.upload(biodb_name, this.fileList).subscribe(response => {
       this.uploading=false;
       alert(response);
       this.fileList = [];

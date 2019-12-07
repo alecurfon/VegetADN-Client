@@ -1,0 +1,27 @@
+<search-form id="searchForm" (submit)="searchEvent()" (download)="downloadEvent($event)">
+</search-form>
+
+<div class="container">
+  <div class="alert alert-warning text-center" *ngIf="!updated">
+    Search results may be deprecated. It can be updated, but it would take a while.
+    <button type="button" [disabled]="loading" class="btn btn-warning ml-3" (click)="refreshSearch()">
+      Refresh the search gear.
+    </button>
+  </div>
+  <div class="d-flex justify-content-center" *ngIf="loading">
+    <progress></progress>
+  </div>
+
+  <div [hidden]="loading">
+    <div class="alert alert-info" *ngIf="searchResult.length<=0">
+      There is nothing found.
+    </div>
+    <div *ngIf="numElements>0">
+      <div class="alert alert-info">
+        Items: {{firstElement()}} to {{lastElement()}} of {{numElements}}
+      </div>
+      <search-pagination (change)="pageEvent($event)" [items]="searchResult" [itemsType]="searchValues.type" [page]="searchValues.page" [pages]="numPages">
+      </search-pagination>
+    </div>
+  </div>
+</div>

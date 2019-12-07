@@ -1,0 +1,28 @@
+
+<div *ngIf="type=='biodatabase'">
+  <div class="card-body">
+    <a [routerLink]="['/consult/biodatabase/'+data.name]">
+      <h3 class="card-title">{{data.name}}</h3>
+    </a>
+    <p class="card-text">{{data.authority}}</p>
+    <p class="card-text">{{data.description}}</p>
+  </div>
+</div>
+
+<div *ngIf="type=='bioentry'">
+  <div class="card-body">
+    <a [routerLink]="['/consult/bioentry/'+data.accession]">
+      <h3 class="card-title">{{data.accession}}</h3>
+    </a>
+    <p class="card-text">{{data.description}}</p>
+  </div>
+</div>
+
+<div *ngIf="type=='taxon'">
+  <div class="card-body">
+    <a [routerLink]="['/consult/taxon/'+data.taxon_id]">
+      <h3 class="card-title">{{data.name}}</h3>
+    </a>
+    <p class="card-text">{{data.name_class}}</p>
+  </div>
+</div>

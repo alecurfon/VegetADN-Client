@@ -7,6 +7,7 @@ import { LayoutModule } from '@modules/layout/layout.module';
 import { LoginModule } from '@modules/login/login.module';
 import { HomeModule } from '@modules/home/home.module';
 import { ImportModule } from '@modules/import/import.module';
+import { SearchModule } from '@modules/search/search.module';
 import { ConsultModule } from '@modules/consult/consult.module';
 import { BiodbModule } from '@modules/biodb/biodb.module';
 
@@ -25,6 +26,7 @@ import { RestfulService } from '@shared/services/restful.service';
     LoginModule,
     HomeModule,
     ImportModule,
+    SearchModule,
     ConsultModule,
     BiodbModule
   ],

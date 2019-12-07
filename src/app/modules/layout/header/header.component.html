@@ -1,5 +1,36 @@
-<a [routerLink]="['/home']" class="home">
-  <h1>VegetADN</h1>
-</a>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">
+    <img src="assets/images/vegetADN.ico" class="d-inline-block align-top" width="30" height="30">
+    VegetADN
+  </span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<a [routerLink]="['/login']" class="login button fancy-button">Log in</a>
+  <nav class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/search?type=biodatabase">Sequence collections</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/search?type=bioentry">DNA sequences</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/search?type=taxon">Taxonomy</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/biodb">Sequence collections</a>
+          <a class="dropdown-item" href="/import">Import sequence files</a>
+        </div>
+      </li>
+    </ul>
+    <a href="/login" class="btn btn-outline-success my-2 my-sm-0">Login</a>
+  </nav>
+</header>

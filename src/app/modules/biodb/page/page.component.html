@@ -1,57 +1,39 @@
-<form [formGroup]="form">
-  <section class="form">
-    <h1>Biodatabase Manager</h1>
-    <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
-    <p>
-      <label for="name">
-        <span>Name: </span>
-        <div class="tooltip">
-          <strong><abbr title="required">*</abbr></strong>
-          <span class="tooltiptext">This field is required.</span></div>
-      </label>
-      <input id="name" type="text" formControlName="name" value="" required>
-    </p>
-    <p>
-      <label for="authority"><span>Authority: </span></label>
-      <input id="authority" type="text" formControlName="authority" value="">
-    </p>
-    <p>
-      <label for="description"><span>Description: </span></label>
-      <textarea id="description" formControlName="description" rows="8" cols="80"></textarea>
-    </p>
-    <p>
-      <button type="button" (click)="createBiodb()" [disabled]="!form.valid">
-        Create new biodatabase</button>
-      <button type="button" (click)="updateBiodb()" [disabled]="selectedIndex<0">
-        Update existing biodatabase</button>
-    </p>
-  </section>
+<div class="modal fade" id="formDialog" tabindex="-1" role="dialog">
+  <biodatabase-form (submit)="formSubmitted($event)"></biodatabase-form>
+</div>
+<div class="container text-center">
+  <h1 class="mb-4">Biodatabase Manager
+    <button type="button" class="btn btn-success" (click)="selectBiodb(-1)" data-toggle="modal" data-target="#formDialog">Create new collection</button>
+  </h1>
 
-  <div class="drop-left clickable" (click)='showBiodbList()'>
-    <h1><</h1>
-    <h2 class="vertical-text">Biodatabases</h2>
-    <h1><</h1>
-  </div>
-  <div id="biodbTable">
-    <table>
-      <thead>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-light">
         <tr>
-          <th width="20%">Name</th>
-          <th width="20%">Authority</th>
-          <th width="50%">Description</th>
-          <th width="10%">Remove</th>
+          <th scope="col">Sequences</th>
+          <th scope="col">Name</th>
+          <th scope="col">Authority</th>
+          <th scope="col">Description</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Remove</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let i of biodbList; index as rowIndex;" class="clickable" (click)="selectBiodb(rowIndex)">
-          <td width="20%">{{ i.name }}</td>
-          <td width="20%">{{ i.authority }}</td>
-          <td width="50%">{{ i.description }}</td>
-          <td width="10%">
-            <button type="button" (click)="removeBiodb(rowIndex)">X</button>
+      <tbody class="text-left">
+        <tr *ngFor="let i of biodbList; index as rowIndex;">
+          <td class="text-center">{{ i.count }}</td>
+          <th scope="row">{{ i.name }}</th>
+          <td>{{ i.authority }}</td>
+          <td class="overflow-auto">{{ i.description }}</td>
+          <td>
+            <button type="button" class="btn btn-success" (click)="selectBiodb(rowIndex)" data-toggle="modal" data-target="#formDialog">Edit</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-success" (click)="removeBiodb(rowIndex)">
+              <img src="assets/images/icons/trash.png" alt="trash-icon" height="20">
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</form>
+</div>

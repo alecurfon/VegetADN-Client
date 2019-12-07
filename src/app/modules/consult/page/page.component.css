@@ -1,7 +1,0 @@
-label {
-  display: inline;
-  margin: 1%;
-}
-thead tr > *, tfoot tr > * {
-  display: inline;
-}
