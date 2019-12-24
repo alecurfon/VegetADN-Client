@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'search-pagination',
+  selector: 'pagination-component',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
@@ -31,6 +31,8 @@ export class PaginationComponent {
       default:
         return;
     }
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     this.change.emit(this.page)
   }
 }

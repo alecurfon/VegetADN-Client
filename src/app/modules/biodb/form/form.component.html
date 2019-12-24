@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
   <div class="modal-content">
 
     <div class="modal-header">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" (click)="proceed()" class="btn btn-primary" data-dismiss="modal" [disabled]="!form.valid">Submit</button>
+        <button type="button" (click)="onSubmit()" class="btn btn-primary" data-dismiss="modal" [disabled]="!form.valid">Submit</button>
       </div>
     </form>
 

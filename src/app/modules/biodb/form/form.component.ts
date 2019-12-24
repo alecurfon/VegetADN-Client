@@ -1,9 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'biodatabase-form',
+  selector: 'biodb-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
@@ -16,7 +15,7 @@ export class FormComponent {
     description: new FormControl('')
   });
 
-  proceed() {
+  onSubmit() {
     this.submit.emit(this.form.value);
   }
 }

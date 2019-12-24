@@ -2,8 +2,9 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
 
-import { FormComponent } from '../components/form/form.component';
-import { RestfulService } from '@shared/services/restful.service.ts';
+import { FormGroup, FormControl } from '@angular/forms';
+import { PaginationComponent } from '@shared/components/pagination/pagination.component';
+import { RestfulService } from '@shared/services/restful.service';
 
 @Component({
   selector: 'search-page',
@@ -12,13 +13,15 @@ import { RestfulService } from '@shared/services/restful.service.ts';
 })
 export class SearchPageComponent implements AfterViewInit {
 
-  @ViewChild(FormComponent, {static: false}) searchForm;
   searchResult: Array<any> = [];
-  searchValues = {'page': 1, 'page_size': 50, 'type': 'biodatabase', 'search': ''};
+  searchForm = new FormGroup({
+    type : new FormControl('biodatabase'),
+    search : new FormControl(''),
+  });
+  searchValues = {'page': 1, 'page_size': 10, 'type': 'biodatabase', 'search': ''};
   numElements: number = 0;
   numPages: number = 1;
-  loading = false;
-  // updated = false;
+  loading = true;
 
   constructor(private restfulApi: RestfulService, private route: ActivatedRoute) {
     let preset = this.route.snapshot.queryParams.type;
@@ -26,52 +29,61 @@ export class SearchPageComponent implements AfterViewInit {
       case 'biodatabase':
       case 'bioentry':
       case 'taxon':
-        this.searchValues.type = preset;
+        this.searchForm.setValue({'type':preset,'search':''});
         break;
     }
   }
 
   ngAfterViewInit() {
-    this.searchForm.form.setValue(this.searchValues);
-  }
-
-  refreshSearch() {
-    this.loading = true;
-    this.restfulApi.prepareSearch(this.searchForm.form.value.type).subscribe(response => {
-      this.loading = false;
-      // this.updated = true;
-    }, error => {
-      this.loading = false;
-      alert(error.error['message'] + '\nCould not refresh properly.');
-    });
+    this.restfulApi.prepareSearch('biodatabase').subscribe(
+      response => {}, error => {
+      alert(error.error['message'] + '\nCould not update the search engine.\nIf the search results seem outdated,\ntry reloading the page.');
+      });
+    this.restfulApi.prepareSearch('bioentry').subscribe(
+      response => {}, error => {
+        alert(error.error['message'] + '\nCould not be refreshed the search engine.\nIf the search results look deprecated,\ntry reloading the page.');
+      });
+    this.searchEvent();
   }
 
   pageEvent(value) {
     this.searchValues.page = value;
-    this.onSubmit();
+    this.search();
   }
 
   searchEvent() {
     this.searchResult = [];
-    this.searchValues = this.searchForm.form.value;
+    this.searchValues = this.searchForm.value;
     this.searchValues.page = 1;
-    this.onSubmit();
+    this.searchValues.page_size = 10;
+    this.search();
   }
 
-  downloadEvent(format) {
-    this.loading = true;
-    this.restfulApi.download({'type': 'biodatabase', 'id': 'default', 'filename': 'file', 'format': format})
-    .subscribe(
-      data => {
-        saveAs(data, 'filename');
-        this.loading = false;
-      }, error => {
-        this.loading = false;
-        alert(error.error['message'] + '\nThe operation could not be completed.');
-    });
+  downloadAllEvent(values) {
+    for(var entity of this.searchResult) {
+      this.loading = true;
+      let response = new Blob();
+      let filename = entity.name + '_download.' + values.format;
+      if(values.filename!='') {
+        filename = values.filename + '_' + filename;
+      }
+      this.restfulApi.download({'biodatabase': entity.name, 'filename': filename, 'format': values.format})
+        .subscribe(
+          data => {
+            response = new Blob([response, data], {'type': 'arraybuffer'});
+          },
+          error => {
+            alert(error.error['message'] + '\nThe operation could not be completed.');
+          },
+          () => {
+            this.loading = false;
+            saveAs(response, filename);
+          }
+        );
+    }
   }
 
-  onSubmit() {
+  search() {
     this.loading = true;
     this.restfulApi.search(this.searchValues).subscribe(response => {
       this.loading = false;

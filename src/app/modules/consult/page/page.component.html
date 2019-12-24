@@ -1,32 +1,20 @@
-<p>consulting {{type}}:{{id}} works!</p>
-
-
-<div *ngIf="type=='bioentry'">
-  <div class="information">
-    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
-  </div>
-  <div class="related">
-
-  </div>
-  <h2>Sequences related with this bioentry.</h2>
+<div class="modal fade" id="downloadDialog" tabindex="-1" role="dialog">
+  <download-form></download-form>
 </div>
 
-<div *ngIf="type=='biodatabase'">
-  <div class="information">
-    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
-  </div>
-  <div class="related">
-
-  </div>
-  <h2>Sequences related with this biodatabase.</h2>
+<div class="container-fluid jumbotron py-3">
+  <card-component [type]="type" [data]="entity"></card-component>
+  <textarea *ngIf="type=='bioentry'" name="sequence" class="w-100" rows="20" wrap="off" readonly>{{entity.sequence }}</textarea>
 </div>
-
-<div *ngIf="type=='taxon'">
-  <div class="information">
-    <p *ngFor="let i of entity">{{i.key}}: {{i.value}}</p>
+<div class="container">
+  <div class="alert alert-info" *ngIf="relatedList.length==0">
+    There is nothing related.
   </div>
-  <div class="related">
-
+  <div *ngIf="relatedList.length>0">
+    <div class="alert alert-info">
+        List of {{relatedType[type]}}: {{firstElement()}} to {{lastElement()}} of {{numElements}}
+    </div>
+    <pagination-component (change)="pageEvent($event)" [items]="relatedList" [itemsType]="relatedType[type]" [page]=page [pages]=numPages>
+    </pagination-component>
   </div>
-  <h2>Sequences related with this taxon.</h2>
 </div>

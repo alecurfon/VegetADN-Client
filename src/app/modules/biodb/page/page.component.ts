@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormComponent } from '../form/form.component';
-import { RestfulService } from '@shared/services/restful.service.ts';
-import { Biodatabase } from '@shared/db_model/biodatabase.model.ts';
+import { RestfulService } from '@shared/services/restful.service';
 
 @Component({
   selector: 'biodb-page',
@@ -15,7 +14,7 @@ export class BiodbPageComponent implements OnInit {
   constructor(private restfulApi: RestfulService) {}
 
   @ViewChild(FormComponent, {static: false}) formDialog;
-  biodbList: Array<Biodatabase> = [];
+  biodbList: Array<any> = [];
   selectedIndex: number = -1;
 
   ngOnInit() {
@@ -23,11 +22,13 @@ export class BiodbPageComponent implements OnInit {
   }
 
   refreshBiodbList() {
-    this.restfulApi.getBiodb('yes').subscribe(response => {
-       this.biodbList = response;
-    }, error => {
-       alert(error.error['message'] + '\nThe list of collections could not be loaded.');
-    });
+    this.restfulApi.getBiodbList({'count':'yes'}).subscribe(
+      response => {
+        this.biodbList = response;
+      }, error => {
+        alert(error.error['message'] + '\nThe list of collections could not be loaded.');
+      }
+    );
   }
 
   selectBiodb(index) {
@@ -42,33 +43,37 @@ export class BiodbPageComponent implements OnInit {
 
   formSubmitted(values) {
     if(this.selectedIndex<0) {
-      console.log(values);
       this.createBiodb(values);
     } else {
-      console.log(values);
       this.updateBiodb(values);
     }
   }
 
   createBiodb(values) {
-    this.restfulApi.createBiodb({'name':values.name, 'authority':values.authority, 'description': values.description})
-    .subscribe(response => {
-      this.refreshBiodbList();
-      alert(response['message']);
-    }, error => {
-      alert(error.error['message'] + '\nThe collection could not be created.');
-    });
+    this.restfulApi
+      .createBiodb({'name':values.name, 'authority':values.authority, 'description': values.description})
+      .subscribe(
+        response => {
+          this.refreshBiodbList();
+          alert(response['message']);
+        }, error => {
+          alert(error.error['message'] + '\nThe collection could not be created.');
+        }
+      );
   }
 
   updateBiodb(values) {
-    this.restfulApi.updateBiodb(this.biodbList[this.selectedIndex].name,
-      {'name':values.name, 'authority':values.authority, 'description': values.description})
-    .subscribe(response => {
-      this.refreshBiodbList();
-      alert(response['message']);
-    }, error => {
-      alert(error.error['message'] + '\nThe collection could not be updated.');
-    });
+    this.restfulApi
+      .updateBiodb(this.biodbList[this.selectedIndex].name,
+        {'name':values.name, 'authority':values.authority, 'description': values.description})
+      .subscribe(
+        response => {
+          this.refreshBiodbList();
+          alert(response['message']);
+        }, error => {
+          alert(error.error['message'] + '\nThe collection could not be updated.');
+        }
+      );
   }
 
   removeBiodb(index) {
@@ -77,11 +82,13 @@ export class BiodbPageComponent implements OnInit {
       return;
     }
     this.restfulApi.deleteBiodb(this.biodbList[index].name)
-    .subscribe(response => {
-      this.refreshBiodbList();
-      alert(response['message']);
-    }, error => {
-      alert(error.error['message'] + '\nThe collection could not be removed.');
-    });
+      .subscribe(
+        response => {
+          this.refreshBiodbList();
+          alert(response['message']);
+        }, error => {
+          alert(error.error['message'] + '\nThe collection could not be removed.');
+        }
+      );
   }
 }

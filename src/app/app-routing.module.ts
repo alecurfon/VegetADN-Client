@@ -10,9 +10,10 @@ import { ConsultPageComponent } from '@modules/consult/page/page.component';
 import { BiodbPageComponent } from '@modules/biodb/page/page.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home'},
+  { path: '', pathMatch: 'full', redirectTo: 'search'},
   { path: '', component: LayoutPageComponent, children: [
-    { path: 'home', component: HomePageComponent},
+    // { path: 'home', component: HomePageComponent},
+    { path: 'home', redirectTo: 'search'},
     { path: 'import', component: ImportPageComponent},
     { path: 'search', component: SearchPageComponent},
     { path: 'consult/:type/:id', component: ConsultPageComponent},

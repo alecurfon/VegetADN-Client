@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { RestfulService } from '@shared/services/restful.service.ts';
-import { Biodatabase } from '@shared/db_model/biodatabase.model.ts';
+import { RestfulService } from '@shared/services/restful.service';
 
 @Component({
   selector: 'import-page',
@@ -17,11 +16,11 @@ export class ImportPageComponent implements OnInit {
 
   fileList: Array<File> = [];
   biodb = new FormControl(-1);
-  biodbList: Array<Biodatabase> = [];
+  biodbList: Array<any> = [];
   uploading = false;
 
   ngOnInit() {
-    this.restfulApi.getBiodb().subscribe(response => {
+    this.restfulApi.getBiodbList().subscribe(response => {
       this.biodbList = response;
     }, error => {
       alert(error.error + '\nThe biodatabases could not be loaded.');
@@ -51,13 +50,16 @@ export class ImportPageComponent implements OnInit {
   onSubmit() {
     this.uploading=true;
     let biodb_name = this.biodbList[this.biodb.value].name;
-    this.restfulApi.upload(biodb_name, this.fileList).subscribe(response => {
-      this.uploading=false;
-      alert(response);
-      this.fileList = [];
-    }, error => {
-      this.uploading=false;
-      alert(error.error + '\nThe operation could not be completed.');
-    });
+    this.restfulApi.upload(biodb_name, this.fileList).subscribe(
+      response => {
+        alert(response);
+        this.fileList = [];
+      }, error => {
+        this.uploading=false;
+        alert(error.error + '\nThe operation could not be completed.');
+      }, () => {
+        this.uploading=false;
+      }
+    );
   }
 }

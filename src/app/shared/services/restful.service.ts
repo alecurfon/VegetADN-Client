@@ -13,6 +13,14 @@ export class RestfulService {
   constructor(private http: HttpClient) { }
 
   private static httpOptions(headersDict, paramsDict) {
+    // // httpOptions {
+    // //   headers?: HttpHeaders | { [header: string]: string | string[]; };
+    // //   observe?: "body";
+    // //   params?: HttpParams | { [param: string]: string | string[]; };
+    // //   reportProgress?: boolean;
+    // //   responseType: "arraybuffer";
+    // //   withCredentials?: boolean;
+    // // }
     // let headers = new HttpHeaders();
     // for(var key in headersDict) {
     //   headers = headers.append(key, headersDict[key]);
@@ -22,16 +30,8 @@ export class RestfulService {
     //   params = params.append(key, paramsDict[key]);
     // }
     // console.log({'headers': headers, 'params': params});
-    return {'headers': headersDict, 'params': paramsDict};
+    return {'headers':headersDict,'params':paramsDict};
   }
-  // httpOptions {
-  //   headers?: HttpHeaders | { [header: string]: string | string[]; };
-  //   observe?: "body";
-  //   params?: HttpParams | { [param: string]: string | string[]; };
-  //   reportProgress?: boolean;
-  //   responseType: "arraybuffer";
-  //   withCredentials?: boolean;
-  // }
 
   // Import files
 
@@ -45,27 +45,18 @@ export class RestfulService {
 
   download(params): Observable<any> {
     let options = RestfulService.httpOptions({"Content-Type": "application/json"}, params);
-    options['responseType'] = "blob";
+    options['responseType'] = "text/plain";
     return this.http.get(this.baseUrl + '/download', options);
   }
 
   // Search
 
   prepareSearch(type): Observable<any> {
-    return this.http.put(this.baseUrl + '/search', RestfulService.httpOptions({}, {'type': type}));
+    return this.http.put(this.baseUrl + '/search?type=' + type, {});
   }
 
   search(formData): Observable<any> {
-    return this.http.get(this.baseUrl + '/search', { params: formData });
-  }
-
-  // Bioentry
-
-  getBioentry(id?): Observable<any> {
-    if(id != undefined) {
-      return this.http.get(this.baseUrl + '/bioentry/' + id);
-    }
-    return this.http.get(this.baseUrl + '/bioentry');
+    return this.http.get(this.baseUrl + '/search', {'params':formData});
   }
 
   // Taxon
@@ -77,13 +68,40 @@ export class RestfulService {
     return this.http.get(this.baseUrl + '/taxon');
   }
 
+  // Bioentry
+
+  getBioentry(id, args?): Observable<any> {
+    var options={};
+    if(args != undefined) {
+      options={'params':args};
+    }
+    return this.http.get(this.baseUrl + '/bioentry/' + id, options);
+  }
+
+  getBioentryList(args?): Observable<any> {
+    var options={};
+    if(args != undefined) {
+      options={'params':args};
+    }
+    return this.http.get(this.baseUrl + '/bioentry', options);
+  }
+
   // Biodatabases
 
-  getBiodb(count='no', id?): Observable<any> {
-    if(id != undefined) {
-      return this.http.get(this.baseUrl + '/biodatabase/' + id, {'params':{'count':count}});
+  getBiodb(id, args?): Observable<any> {
+    var options={};
+    if(args != undefined) {
+      options={'params':args};
     }
-    return this.http.get(this.baseUrl + '/biodatabase', {'params':{'count':count}});
+    return this.http.get(this.baseUrl + '/biodatabase/' + id, options);
+  }
+
+  getBiodbList(args?): Observable<any> {
+    var options={};
+    if(args != undefined) {
+      options={'params':args};
+    }
+    return this.http.get(this.baseUrl + '/biodatabase', options);
   }
 
   createBiodb(data): Observable<any> {

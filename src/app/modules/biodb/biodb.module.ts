@@ -7,10 +7,7 @@ import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [BiodbPageComponent, FormComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [BiodbPageComponent]
 })
 export class BiodbModule { }

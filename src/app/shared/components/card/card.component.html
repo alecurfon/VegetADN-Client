@@ -1,0 +1,46 @@
+<div *ngIf="type=='biodatabase'">
+  <div class="card-body">
+    <h3 class="card-title">
+      <a class="text-success" [routerLink]="['/consult/biodatabase/'+data.name]">
+        {{data.name}}</a>
+      <button type="button" (click)="prepareDownload()" class="btn btn-sm btn-outline-success ml-3" data-toggle="modal" data-target="#downloadDialog">
+        <img src="assets/images/icons/download.png" alt="download-icon" height=20>
+      </button>
+    </h3>
+    <p class="card-text">{{data.authority}}</p>
+    <p class="card-text">{{data.description}}</p>
+  </div>
+</div>
+
+<div *ngIf="type=='bioentry'">
+  <div class="card-body">
+    <h3 class="card-title">
+      <a class="text-success" [routerLink]="['/consult/bioentry/',data.accession,{biodatabase:data.biodatabase.name}]">
+        {{data.accession}}
+      </a>
+      <button type="button" (click)="prepareDownload()" class="btn btn-sm btn-outline-success ml-3" data-toggle="modal" data-target="#downloadDialog">
+        <img src="assets/images/icons/download.png" alt="download-icon" height=20>
+      </button>
+    </h3>
+    <p class="card-text">{{data.description}}</p>
+    <div class="card-footer text-muted">
+      <div class="row">
+        <div class="col">
+          Collection: <a class="text-success" [routerLink]="['/consult/biodatabase/'+data.biodatabase.name]">{{data.biodatabase.name}}</a>
+        </div>
+        <div *ngIf="data.taxon!=undefined" class="col">
+          Taxonomy: <a class="text-success" [routerLink]="['/consult/taxon/'+data.taxon.name]">{{data.taxon.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="type=='taxon'">
+  <div class="card-body">
+    <a class="text-success" [routerLink]="['/consult/taxon/'+data.name]">
+      <h3 class="card-title">{{data.name}}</h3>
+    </a>
+    <p class="card-text">{{data.name_class}}</p>
+  </div>
+</div>

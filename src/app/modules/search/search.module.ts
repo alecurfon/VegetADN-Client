@@ -4,13 +4,11 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchPageComponent } from './page/page.component';
-import { FormComponent } from './components/form/form.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { ResultComponent } from './components/result/result.component';
+import { ComponentsModule } from '@shared/components/components.module';
 
 @NgModule({
-  declarations: [SearchPageComponent,FormComponent,PaginationComponent,ResultComponent],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  declarations: [SearchPageComponent],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule,ComponentsModule],
   exports: [SearchPageComponent]
 })
 export class SearchModule { }
