@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 import { RestfulService } from '@shared/services/restful.service';
 

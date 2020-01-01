@@ -21,7 +21,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/search?type=taxon">Taxonomy</a>
       </li>
-      <li class="nav-item dropdown">
+      <li *ngIf="admin=='true'" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Manage
         </a>
@@ -31,6 +31,10 @@
         </div>
       </li>
     </ul>
-    <a href="/login" class="btn btn-outline-success my-2 my-sm-0">Log in</a>
+    <span class="badge badge-success mr-3">
+      <img src="assets/images/icons/user.png" height="20">
+        {{username}}
+    </span>
+    <button type="button" (click)="onLogout()" class="btn btn-secondary">Log out</button>
   </nav>
 </header>

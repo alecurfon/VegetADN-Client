@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
   selector: 'login-page',
@@ -9,17 +11,21 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class LoginPageComponent {
 
   login = new FormGroup({
-    userCtl: new FormControl(''),
-    passwdCtl: new FormControl('')
+    username: new FormControl(''),
+    password: new FormControl('')
   });
 
+  constructor(private router: Router, private auth: AuthService) {}
+
   onSubmit() {
-    console.warn(this.login.value);
-    if (this.login.valid) {
-      console.log("Form Submitted!");
-      this.login.reset();
-    } else {
-      console.log("Form Incomplite!");
-    }
+    this.auth.login(this.login.value).subscribe(
+      (response) => {
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('admin', response.admin);
+        localStorage.setItem('token', response.auth_token);
+      }, (error) => {}, () => {
+        this.router.navigateByUrl('/search');
+      }
+    );
   }
 }

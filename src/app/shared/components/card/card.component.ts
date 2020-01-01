@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-
-import { RestfulService } from '@shared/services/restful.service'
 import { DownloadService } from '@shared/services/download.service'
 
 @Component({
@@ -13,7 +11,7 @@ export class CardComponent {
   @Input() type : string;
   @Input() data: any;
 
-  constructor(private restfulApi: RestfulService, private download: DownloadService) {}
+  constructor(private download: DownloadService) {}
 
   prepareDownload() {
     if(this.type == 'biodatabase') {

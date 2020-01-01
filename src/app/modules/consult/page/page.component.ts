@@ -40,6 +40,8 @@ export class ConsultPageComponent implements OnInit {
     } else if(this.type == 'taxon') {
       this.taxonInit();
     }
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
   biodatabaseInit() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
@@ -12,25 +12,14 @@ export class RestfulService {
 
   constructor(private http: HttpClient) { }
 
-  private static httpOptions(headersDict, paramsDict) {
-    // // httpOptions {
-    // //   headers?: HttpHeaders | { [header: string]: string | string[]; };
-    // //   observe?: "body";
-    // //   params?: HttpParams | { [param: string]: string | string[]; };
-    // //   reportProgress?: boolean;
-    // //   responseType: "arraybuffer";
-    // //   withCredentials?: boolean;
-    // // }
-    // let headers = new HttpHeaders();
-    // for(var key in headersDict) {
-    //   headers = headers.append(key, headersDict[key]);
-    // }
-    // let params = new HttpParams();
-    // for(var key in paramsDict) {
-    //   params = params.append(key, paramsDict[key]);
-    // }
-    // console.log({'headers': headers, 'params': params});
-    return {'headers':headersDict,'params':paramsDict};
+  private static buildTokenHeaders(contentType?: boolean) {
+    let headers = new HttpHeaders();
+    if (contentType) { headers = headers.append('Content-Type', 'application/json'); }
+    let value;
+    if ((value = localStorage.getItem('token')) != null) {
+      headers = headers.append('Authorization', 'Bearer ' + value);
+    }
+    return headers;
   }
 
   // Import files
@@ -40,49 +29,61 @@ export class RestfulService {
     for (let f of fileList) {
       data.append('file', f, f.filename);
     }
-    return this.http.post(this.baseUrl + '/upload/' + biodb, data);
+    return this.http.post(this.baseUrl + '/upload/' + biodb, data,
+      {headers:RestfulService.buildTokenHeaders()});
   }
 
   download(params): Observable<any> {
-    let options = RestfulService.httpOptions({"Content-Type": "application/json"}, params);
-    options['responseType'] = "text/plain";
-    return this.http.get(this.baseUrl + '/download', options);
+    return this.http.get(this.baseUrl + '/download',
+      {
+        headers:RestfulService.buildTokenHeaders(),
+        params:params,
+        responseType:'text'
+      });
   }
 
   // Search
 
   prepareSearch(type): Observable<any> {
-    return this.http.put(this.baseUrl + '/search?type=' + type, {});
+    return this.http.put(this.baseUrl + '/search?type=' + type, {},
+      {headers:RestfulService.buildTokenHeaders()});
   }
 
   search(formData): Observable<any> {
-    return this.http.get(this.baseUrl + '/search', {'params':formData});
+    return this.http.get(this.baseUrl + '/search',
+      {
+        headers:RestfulService.buildTokenHeaders(),
+        params:formData
+      });
   }
 
   // Taxon
 
   getTaxon(id?): Observable<any> {
+    let url = this.baseUrl + '/taxon';
     if(id != undefined) {
-      return this.http.get(this.baseUrl + '/taxon/' + id);
+      url += '/' + id;
     }
-    return this.http.get(this.baseUrl + '/taxon');
+    return this.http.get(url, {headers:RestfulService.buildTokenHeaders()});
   }
 
   // Bioentry
 
   getBioentry(id, args?): Observable<any> {
-    var options={};
+    var options = {};
     if(args != undefined) {
-      options={'params':args};
+      options['params'] = args;
     }
+    options['headers'] = RestfulService.buildTokenHeaders();
     return this.http.get(this.baseUrl + '/bioentry/' + id, options);
   }
 
   getBioentryList(args?): Observable<any> {
     var options={};
     if(args != undefined) {
-      options={'params':args};
+      options['params'] = args;
     }
+    options['headers'] = RestfulService.buildTokenHeaders();
     return this.http.get(this.baseUrl + '/bioentry', options);
   }
 
@@ -91,28 +92,33 @@ export class RestfulService {
   getBiodb(id, args?): Observable<any> {
     var options={};
     if(args != undefined) {
-      options={'params':args};
+      options['params'] = args;
     }
+    options['headers'] = RestfulService.buildTokenHeaders();
     return this.http.get(this.baseUrl + '/biodatabase/' + id, options);
   }
 
   getBiodbList(args?): Observable<any> {
     var options={};
     if(args != undefined) {
-      options={'params':args};
+      options['params'] = args;
     }
+    options['headers'] = RestfulService.buildTokenHeaders();
     return this.http.get(this.baseUrl + '/biodatabase', options);
   }
 
   createBiodb(data): Observable<any> {
-    return this.http.post(this.baseUrl + '/biodatabase', data);
+    return this.http.post(this.baseUrl + '/biodatabase', data,
+      {headers:RestfulService.buildTokenHeaders(true)});
   }
 
   updateBiodb(id, data): Observable<any> {
-    return this.http.put(this.baseUrl + '/biodatabase/' + id, data);
+    return this.http.put(this.baseUrl + '/biodatabase/' + id, data,
+      {headers:RestfulService.buildTokenHeaders(true)});
   }
 
   deleteBiodb(id): Observable<any> {
-    return this.http.delete(this.baseUrl + '/biodatabase/' + id);
+    return this.http.delete(this.baseUrl + '/biodatabase/' + id,
+      {headers:RestfulService.buildTokenHeaders()});
   }
 }
