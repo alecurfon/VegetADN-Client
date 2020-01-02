@@ -15,7 +15,7 @@
 <div *ngIf="type=='bioentry'">
   <div class="card-body">
     <h3 class="card-title">
-      <a class="text-success" [routerLink]="['/consult/bioentry/',data.accession,{biodatabase:data.biodatabase.name}]">
+      <a *ngIf="data.biodatabase!=undefined" class="text-success" [routerLink]="['/consult/bioentry/',data.accession,{biodatabase:data.biodatabase.name}]">
         {{data.accession}}
       </a>
       <button type="button" (click)="prepareDownload()" class="btn btn-sm btn-outline-success ml-3" data-toggle="modal" data-target="#downloadDialog">
@@ -26,7 +26,7 @@
     <div class="card-footer text-muted">
       <div class="row">
         <div class="col">
-          Collection: <a class="text-success" [routerLink]="['/consult/biodatabase/'+data.biodatabase.name]">{{data.biodatabase.name}}</a>
+          Collection: <a *ngIf="data.biodatabase!=undefined" class="text-success" [routerLink]="['/consult/biodatabase/'+data.biodatabase.name]">{{data.biodatabase.name}}</a>
         </div>
         <div *ngIf="data.taxon!=undefined" class="col">
           Taxonomy: <a class="text-success" [routerLink]="['/consult/taxon/'+data.taxon.name]">{{data.taxon.name}}</a>

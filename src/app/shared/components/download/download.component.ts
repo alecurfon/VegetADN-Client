@@ -17,12 +17,14 @@ export class DownloadComponent {
     filename: new FormControl(''),
     format: new FormControl('fasta')
   });
+  downloading = false;
 
   constructor(private downloadService: DownloadService, private restfulApi: RestfulService) {}
 
   onSubmit() {
     this.submit.emit(this.form.value);
     if(this.download) {
+      this.downloading=true;
       let values = this.downloadService.get();
       let response = new Blob();
       this.restfulApi.download(
@@ -37,6 +39,7 @@ export class DownloadComponent {
           },
           () => {
             saveAs(response, this.form.value.filename);
+            this.downloading=false;
           }
         );
     }
