@@ -15,13 +15,10 @@ export class HeaderComponent {
   admin: string = localStorage.getItem('admin');
 
   onLogout() {
-    this.auth.logout().subscribe(
-      (response) => {}, (error) => {}, () => {
-        localStorage.removeItem('username');
-        localStorage.removeItem('token');
-        localStorage.removeItem('admin');
-        this.router.navigateByUrl('/login');
-      }
-    );
+    this.auth.logout().subscribe();
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+    localStorage.removeItem('admin');
+    this.router.navigateByUrl('/login');
   }
 }
