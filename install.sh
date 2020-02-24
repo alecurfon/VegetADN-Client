@@ -1,4 +1,4 @@
 sudo apt install nodejs
 sudo apt install npm
-# ng new VegetADN --directory client/ --force
-# ng build
+npm install -g @angular/cli
+ng serve --open
