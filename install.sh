@@ -1,4 +1,4 @@
-sudo apt install nodejs
-sudo apt install npm
-npm install -g @angular/cli
+sudo apt -q -y install npm nodejs
+sudo npm update npm@6.13
+sudo npm install
 ng serve --open
