@@ -1,0 +1,43 @@
+<div class="modal fade" id="formDialog" tabindex="-1" role="dialog">
+  <biodb-form (submit)="formSubmitted($event)"></biodb-form>
+</div>
+
+<div class="container-fluid">
+  <h1 class="text-center mb-4">Biodatabase Manager
+    <button type="button" class="btn btn-sm btn-success" (click)="selectBiodb(-1)" data-toggle="modal" data-target="#formDialog">
+      + Create new collection
+    </button>
+  </h1>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Sequences</th>
+          <th scope="col">Name</th>
+          <th scope="col">Authority</th>
+          <th scope="col">Description</th>
+          <th scope="col" class="text-center">Edit</th>
+          <th scope="col" class="text-center">Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of biodbList; index as rowIndex;">
+          <td class="text-center">{{ i.count }}</td>
+          <th scope="row">{{ i.name }}</th>
+          <td>{{ i.authority }}</td>
+          <td class="overflow-auto">{{ i.description }}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-success" (click)="selectBiodb(rowIndex)" data-toggle="modal" data-target="#formDialog">
+              <img src="assets/images/icons/edit.png" alt="edit-icon" height="20">
+            </button>
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-success" (click)="removeBiodb(rowIndex)">
+              <img src="assets/images/icons/trash.png" alt="trash-icon" height="20">
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

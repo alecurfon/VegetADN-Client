@@ -1,0 +1,18 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let i of items; index as rowIndex;">
+    <card-component [type]="itemsType" [data]="i">
+    </card-component>
+  </li>
+</ul>
+
+<div [hidden]="pages<2" class="my-3 btn-group nav justify-content-center">
+  <button class="btn btn-secondary" type="button" [disabled]="page<=1" (click)="changePage('first')"><< First</button>
+  <button class="btn btn-secondary" type="button" [disabled]="page<=1" (click)="changePage('prev')">< Prev</button>
+  <div class="page-item disabled">
+    <span class="page-link">
+      Page {{page}} of {{pages}}
+    </span>
+  </div>
+  <button class="btn btn-secondary" type="button" [disabled]="page>=pages" (click)="changePage('next')">Next ></button>
+  <button class="btn btn-secondary" type="button" [disabled]="page>=pages" (click)="changePage('last')">Last >></button>
+</div>

@@ -1,0 +1,46 @@
+<form class="jumbotron p-4" (submit)="searchEvent()" [formGroup]="searchForm">
+  <div id="browser" class="input-group mb-3">
+    <div class="input-group-prepend">
+      <select class="custom-select" formControlName="type">
+        <option value="biodatabase">Collection</option>
+        <option value="bioentry">Sequence</option>
+        <option value="taxon">Taxon</option>
+      </select>
+    </div>
+    <input class="form-control" type="search" formControlName="search" placeholder="Search in the system ..." size="30">
+    <div class="input-group-append">
+      <button class="btn btn-outline-success" type="button" (click)="searchEvent()">
+        <img src="assets/images/icons/search.png" alt="search-icon" height="20">
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="modal fade" id="downloadAllDialog" tabindex="-1" role="dialog">
+  <download-form [download]=false (submit)="downloadAllEvent($event)"></download-form>
+</div>
+<div class="modal fade" id="downloadDialog" tabindex="-1" role="dialog">
+  <download-form></download-form>
+</div>
+
+<div class="container">
+  <div class="d-flex justify-content-center" *ngIf="loading">
+    <progress></progress>
+  </div>
+
+  <div [hidden]="loading">
+    <div class="alert alert-info" *ngIf="searchResult.length<=0">
+      There is nothing found.
+    </div>
+
+    <div *ngIf="numElements>0">
+      <div class="alert alert-info">
+        List of {{searchValues.type}}: {{firstElement()}} to {{lastElement()}} of {{numElements}}
+        <button type="button" class="btn btn-sm btn-outline-success ml-3" [hidden]="searchValues.type!='biodatabase'" data-toggle="modal" data-target="#downloadAllDialog">Download all biodatabases sequences</button>
+      </div>
+
+      <pagination-component (change)="pageEvent($event)" [items]="searchResult" [itemsType]="searchValues.type" [page]="searchValues.page" [pages]="numPages">
+      </pagination-component>
+    </div>
+  </div>
+</div>

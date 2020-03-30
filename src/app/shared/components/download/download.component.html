@@ -1,0 +1,38 @@
+<div class="modal-dialog modal-dialog-centered">
+  <div *ngIf="!downloading" class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Download settings</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (submit)="onSubmit()" [formGroup]="form">
+      <div class="modal-body">
+        <div class="form-group">
+          <input id="filename" class="form-control" type="text" formControlName="filename" placeholder="Filename">
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" for="format">File format</span>
+          </div>
+          <div class="input-group-append">
+            <select class="custom-select" formControlName="format">
+              <option value="fasta">FASTA</option>
+              <option value="gb">GenBank</option>
+              <option value="embl">EBML</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="onSubmit()" class="btn btn-primary">Download</button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="downloading" class="modal-content text-center">
+    <div class="modal-body">
+      <h5 class="modal-title">Downloading ...</h5>
+      <progress class="w-75"></progress>
+    </div>
+  </div>
+</div>

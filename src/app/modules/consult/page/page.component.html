@@ -1,0 +1,20 @@
+<div class="modal fade" id="downloadDialog" tabindex="-1" role="dialog">
+  <download-form></download-form>
+</div>
+
+<div class="container-fluid jumbotron py-3">
+  <card-component [type]="type" [data]="entity"></card-component>
+  <textarea *ngIf="type=='bioentry'" name="sequence" class="w-100" rows="20" wrap="off" readonly>{{entity.sequence }}</textarea>
+</div>
+<div class="container">
+  <div class="alert alert-info" *ngIf="relatedList.length==0">
+    There is nothing related.
+  </div>
+  <div *ngIf="relatedList.length>0">
+    <div class="alert alert-info">
+        List of {{relatedType[type]}}: {{firstElement()}} to {{lastElement()}} of {{numElements}}
+    </div>
+    <pagination-component (change)="pageEvent($event)" [items]="relatedList" [itemsType]="relatedType[type]" [page]=page [pages]=numPages>
+    </pagination-component>
+  </div>
+</div>

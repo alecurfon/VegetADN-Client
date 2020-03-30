@@ -1,0 +1,16 @@
+#dropbox {
+	text-align: center;
+	padding: 5%;
+	background-color: #c8dadf;
+	outline: 2px dashed #92b0b3;
+	outline-offset: -10px;
+}
+
+img.vert-move {
+    animation: mover 1s infinite  alternate;
+}
+
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
