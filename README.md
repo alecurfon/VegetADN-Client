@@ -6,12 +6,14 @@ This is a client for the [VegetADN-Server](https://github.com/AlejandroCurbelo/V
 ## Instalation
 
 To use it, download or clone it with
-`git clone https://github.com/AlejandroCurbelo/VegetADN-Client`
-, enable the execution of the bash script with `sudo chmod +x install.sh`
+`git clone https://github.com/AlejandroCurbelo/VegetADN-Client`,
+enable the execution of the bash script with `sudo chmod u+x install.sh`
 and run `./install.sh`.
 
 It will be necessary to set the database password, and a username and password for
 the administrator and normal user account.
+
+Once installed, it is posible run the client from its folder with `ng serve --o &`.
 
 -------------------------------
 
