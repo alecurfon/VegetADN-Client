@@ -10,8 +10,7 @@ To use it, download or clone it with
 enable the execution of the bash script with `sudo chmod u+x install.sh`
 and run `./install.sh`.
 
-It will be necessary to set the database password, and a username and password for
-the administrator and normal user account.
+# Execution
 
 Once installed, it is posible run the client from its folder with `ng serve --o &`.
 
