@@ -1,4 +1,21 @@
-# VegetADN
+# VegetADN-Client
+
+This project is the graphical user interface for the VegetADN application.
+This is a client for the [VegetADN-Server](https://github.com/AlejandroCurbelo/VegetADN-Server).
+
+## Instalation
+
+To use it, download or clone it with
+`git clone https://github.com/AlejandroCurbelo/VegetADN-Client`
+, enable the execution of the bash script with `sudo chmod +x install.sh`
+and run `./install.sh`.
+
+It will be necessary to set the database password, and a username and password for
+the administrator and normal user account.
+
+-------------------------------
+
+# README by default
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
 
