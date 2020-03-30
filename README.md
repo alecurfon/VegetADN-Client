@@ -12,7 +12,7 @@ and run `./install.sh`.
 
 # Execution
 
-Once installed, it is posible run the client from its folder with `ng serve --o &`.
+Once installed, it is possible to run the client from its folder with `ng serve --o &`.
 
 -------------------------------
 
