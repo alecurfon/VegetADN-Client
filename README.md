@@ -5,10 +5,13 @@ This is a client for the [VegetADN-Server](https://github.com/AlejandroCurbelo/V
 
 ## Instalation
 
-To use it, download or clone it with
-`git clone https://github.com/AlejandroCurbelo/VegetADN-Client`,
-enable the execution of the bash script with `sudo chmod u+x install.sh`
-and run `./install.sh`.
+To use it, download or clone it with, enable the execution of the bash script, and run
+
+```
+git clone https://github.com/AlejandroCurbelo/VegetADN-Client
+sudo chmod u+x install.sh
+./install.sh
+```
 
 # Execution
 

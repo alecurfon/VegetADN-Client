@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $( dirname $0 )
+cd $( dirname "$0" ) || exit
 sudo apt -qq -y install npm
 sudo npm install npm@6.13 -g
 yes '' | sudo npm install @angular/cli -g

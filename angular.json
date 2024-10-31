@@ -121,5 +121,8 @@
         }
       }
     }},
-  "defaultProject": "VegetADN"
+  "defaultProject": "VegetADN",
+  "cli": {
+    "analytics": false
+  }
 }

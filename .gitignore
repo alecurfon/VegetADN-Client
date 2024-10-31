@@ -1,46 +1,46 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# compiled output
+# Compiled output
 /dist
 /tmp
 /out-tsc
-# Only exists if Bazel was run
-/bazel-out
-
-# dependencies
+/aot
 /node_modules
 
-# profiling files
-chrome-profiler-events.json
-speed-measure-plugin.json
+# Dependencies
+package-lock.json
+yarn.lock
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
+# Angular build artifacts
+/.angular
+/.angular-cache
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# misc
-/.sass-cache
-/connect.lock
+# Logs and temporary files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/*.log
 /coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
 
-# System Files
+# Environment files (add these only if you have environment-specific settings)
+src/environments/environment*.ts
+
+# Compiled JavaScript and map files
+**/*.js
+**/*.js.map
+
+# Optional npm cache
+/.npm
+
+# macOS-specific files
 .DS_Store
-Thumbs.db
+
+# Miscellaneous
+*.tmp
+*.temp
+*.bak
+*.swp
