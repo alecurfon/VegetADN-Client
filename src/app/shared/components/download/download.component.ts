@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 import { DownloadService } from '@shared/services/download.service';
 import { RestfulService } from '@shared/services/restful.service';
